@@ -33,7 +33,22 @@ export default class Round {
         this.players[this.currentPlayer].setTime();
 
         // On appel la méthode applyBuff de chaque player si ce n'est le 1er Round
-        if (this.currentRound > 1) this.players[this.currentPlayer].applyBuff();
+        if (this.currentRound > 1) {
+            this.players[this.currentPlayer].applyBuff();
+
+            let sound = new Audio();
+            if (this.players[this.currentPlayer].buff.bonus) {
+                sound.src = '../sounds/buff.mp3';
+            }
+            else {
+                sound.src = '../sounds/debuff.mp3';
+            }
+
+            sound.addEventListener('canplaythrough', event => {
+                /* the audio is now playable; play it if permissions allow */
+                sound.play();
+            });
+        }
 
         this.players[this.currentPlayer].elPush.addEventListener('mouseup', this.endTurn.bind(this));
     }
