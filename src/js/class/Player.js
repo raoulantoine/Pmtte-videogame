@@ -1,4 +1,5 @@
 import toastr from 'toastr';
+import { sounds } from '../data/sounds'
 
 export default class {
     constructor(name, elCard) {
@@ -106,6 +107,7 @@ export default class {
                 if (this.currentTime === this.time) {
                     roundScore = 200;
                     toastr.info('P.E.R.F.E.C.T.!');
+                    sounds.perfect.play();
                     this.animate('bounce');
                 }
                 else {
