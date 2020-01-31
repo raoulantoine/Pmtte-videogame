@@ -24,6 +24,7 @@ export default class {
         this.elCard.innerHTML += '<div class="loader"><div class="load"><div class="currentTime">0</div></div></div>';
         this.elCard.innerHTML += '<button class="push btn btn--bordered" style="display: none;">Push and hold me!</button>';
         this.elCard.innerHTML += '<div>Score: <span class="score">' + this.score + 'pts</span></div>';
+        this.elCard.innerHTML += '<div class="scoreLoad"></div>';
 
 
         // On stocke les nouveaux éléments HTML dans des propriétés de l'objet pour pouvoir jouer avec par la suite
@@ -33,6 +34,7 @@ export default class {
         this.elCurrentTime = this.elCard.querySelector('.currentTime');
         this.elPush = this.elCard.querySelector('.push');
         this.elScore = this.elCard.querySelector('.score');
+        this.elScoreLoad = this.elCard.querySelector('.scoreLoad');
 
         this.elPush.addEventListener('mousedown', this.push.bind(this));
         this.elPush.addEventListener('mouseup', this.release.bind(this));
@@ -55,8 +57,8 @@ export default class {
             fTimingFunction = timingFunction || 'linear',
             fDelay = delay || '0s',
             fIterationCount = iterationCount || '1',
-            fDirection = direction || 'forwards',
-            fFillMode = fillMode || 'normal';
+            fDirection = direction || 'normal',
+            fFillMode = fillMode || 'both';
 
         this.elCard.style.animation = fName + ' ' + fDuration + ' ' + fTimingFunction + ' ' + fDelay + ' ' + fIterationCount + ' ' + fDirection + ' ' + fFillMode;
     }
@@ -127,6 +129,13 @@ export default class {
         this.render();
     }
 
+    // Calcul la hauteur de la barre de score en fonction de la taille de la carte et des points maximum
+    pointsLoad(maxScore) {
+        this.maxScore = maxScore;
+
+        this.elScoreLoad.style.minHeight = (this.elCard.offsetHeight / maxScore * this.score) + 'px';
+    }
+
     // Définit le temps max pour chaque player par tour
     setTime() {
         this.time = Math.round((Math.random() * (this.timeMax - this.timeMin) + this.timeMin) * 100) / 100;
@@ -156,10 +165,12 @@ export default class {
 
             case 4:
                 this.score += 50;
+                this.pointsLoad(this.maxScore);
                 break;
 
             case 5:
                 this.score -= 50;
+                this.pointsLoad(this.maxScore);
                 break;
         }
 

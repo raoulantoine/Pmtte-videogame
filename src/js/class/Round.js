@@ -41,7 +41,7 @@ export default class Round {
                 sounds.buff.play();
             }
             else {
-                sound.src = '../sounds/debuff.mp3';
+                sounds.debuff.play();
             }
         }
 
@@ -52,6 +52,10 @@ export default class Round {
         if (this.players[this.currentPlayer] === undefined) return;
 
         this.players[this.currentPlayer].elPush.style.display = 'none';
+
+        this.players[this.currentPlayer].pointsLoad(this.maxPlayerScore);
+
+
         if (this.players[++this.currentPlayer] !== undefined) {
             this.turn();
         } else {
@@ -74,6 +78,14 @@ export default class Round {
 
         if (winner !== null) {
             this.elConsole.innerHTML = '<h2>' + winner.name + ' won the game!<br>See you next time assholes.</h2><button class="reload btn btn--bordered">New game!</button>';
+
+            winner.animate('bounce', '1s', 'linear', '0s', 'infinite');
+
+            for (let player = 0; player < this.players.length; ++player) {
+                if (this.players[player] !== winner) {
+                    this.players[player].animate('fadeOutDown', '1s', 'linear', '0s', '1', 'normal', 'forwards');
+                }
+            }
 
             this.elConsole.querySelector('.reload').addEventListener('click', function () {
                 document.location.reload();
