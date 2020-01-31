@@ -28,5 +28,10 @@ export let buffs = [
         id: 5,
         bonus: false,
         infos: 'Sorry mate, you loose 50pts.'
+    },
+    {
+        id: 5,
+        bonus: false,
+        infos: 'Sorry mate, you loose 50pts.'
     }
 ];

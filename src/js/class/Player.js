@@ -13,6 +13,7 @@ export default class {
         this.frameRate = 24;
         this.buff = null;
         this.multiplicator = 1;
+        this.canPlay = true;
     }
 
     // Génère le code html d'un Player
@@ -172,6 +173,10 @@ export default class {
                 this.score -= 50;
                 this.pointsLoad(this.maxScore);
                 break;
+
+            case 6:
+                this.canPlay = false;
+                break;
         }
 
         if (this.buff.bonus) {
@@ -189,6 +194,7 @@ export default class {
         this.currentTime = 0;
         this.elLoad.style.height = 0;
         this.multiplicator = 1;
+        this.canPlay = true;
         this.animate('none');
         this.render();
     }
